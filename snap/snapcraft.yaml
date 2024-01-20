@@ -5,8 +5,12 @@ summary: infer schema of provided file via Spark's df # 79 char long summary
 description: |
   infer schema of provided file via Spark's df.
 
-grade: stable # must be 'stable' to release into candidate/stable channels
-confinement: strict # use 'strict' once you have the right plugs and slots
+adopt-info: inferschema
+grade: stable
+confinement: strict
+
+architectures:
+  - build-on: [amd64]
 
 apps:
   inferschema:
