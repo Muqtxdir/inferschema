@@ -12,7 +12,7 @@ apps:
   inferschema:
     command: bin/inferschema
     environment:
-      JAVA_HOME: $SNAP/usr/lib/javm/java-11-openjdk-amd64
+      JAVA_HOME: $SNAP/usr/lib/jvm/java-11-openjdk-amd64
       SPARK_HOME: $SNAP/opt/spark
 
 parts:
