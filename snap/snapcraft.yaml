@@ -1,0 +1,41 @@
+name: inferschema
+base: core22
+version: '0.1.0'
+summary: infer schema of provided file via Spark's df
+description: |
+  infer schema of provided file via Spark's df.
+
+grade: stable
+confinement: strict
+
+apps:
+  inferschema:
+    command: bin/inferschema
+    environment:
+      JAVA_HOME: $SNAP/usr/lib/javm/java-11-openjdk-amd64
+      SPARK_HOME: $SNAP/opt/spark
+
+parts:
+  inferschema:
+    after:
+    - spark
+    plugin: python
+    source: .
+    build-packages:
+      - python3-pip
+      - python3-poetry
+      
+  spark:
+    plugin: nil
+	  build-packages:
+      - openjdk-11-jdk-headless
+      - openjdk-11-jre-headless
+      - wget
+    override-build: |
+      wget https://dlcdn.apache.org/spark/spark-3.3.4/spark-3.3.4-bin-hadoop3.tgz
+      SPARK_DIR=$CRAFT_PART_INSTALL/opt/spark
+      mkdir -p $SPARK_DIR
+      tar -zxvf spark-3.3.4-bin-hadoop3.tgz
+			mv spark-3.3.4-bin-hadoop3/* $SPARK_DIR/
+		override-prime:
+			snapcraftctl prime
