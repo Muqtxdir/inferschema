@@ -14,11 +14,10 @@ class Schemagenerator:
             self.df: DataFrame = None
             self.spark_session: SparkSession = SparkSession.builder \
                 .appName("inferschema") \
-                .config('spark.jars.packages', 'org.apache.spark:spark-avro_2.12:3.1.1') \
                 .getOrCreate()
             
         except Exception as ex:
-                logger.error(f"Unable to retrieve schema due to {ex}")
+                logger.error(f"Unable to start SparkSession due to {ex}")
         
     def generate_schema(self, file_path: Path, has_header: bool):
 
@@ -53,8 +52,6 @@ class Schemagenerator:
 
         if file_path.endswith('csv'):
             return 'csv'
-        elif file_path.endswith('avro'):
-            return 'avro'
         elif file_path.endswith('.parquet'):
             return 'parquet'
             
