@@ -1,12 +1,12 @@
-name: inferschema
-base: core22
-version: '0.1.0'
-summary: infer schema of provided file via Spark's df
+name: inferschema # you probably want to 'snapcraft register <name>'
+base: core22 # the base snap is the execution environment for this snap
+version: '0.1.0' # just for humans, typically '1.2+git' or '1.3.2'
+summary: infer schema of provided file via Spark's df # 79 char long summary
 description: |
   infer schema of provided file via Spark's df.
 
-grade: stable
-confinement: strict
+grade: stable # must be 'stable' to release into candidate/stable channels
+confinement: strict # use 'strict' once you have the right plugs and slots
 
 apps:
   inferschema:
@@ -27,7 +27,7 @@ parts:
       
   spark:
     plugin: nil
-	  build-packages:
+    build-packages:
       - openjdk-11-jdk-headless
       - openjdk-11-jre-headless
       - wget
@@ -36,6 +36,6 @@ parts:
       SPARK_DIR=$CRAFT_PART_INSTALL/opt/spark
       mkdir -p $SPARK_DIR
       tar -zxvf spark-3.3.4-bin-hadoop3.tgz
-			mv spark-3.3.4-bin-hadoop3/* $SPARK_DIR/
-		override-prime:
-			snapcraftctl prime
+      mv spark-3.3.4-bin-hadoop3/* $SPARK_DIR/
+    override-prime:
+      snapcraftctl prime
