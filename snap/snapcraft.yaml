@@ -17,27 +17,19 @@ apps:
     command: bin/inferschema
     environment:
       JAVA_HOME: $SNAP/usr/lib/jvm/java-11-openjdk-amd64
-      SPARK_HOME: $SNAP/opt/spark
-    plugs: [home, network, network-bind]
+    plugs: [network, network-bind]
 
 parts:
   inferschema:
-    after:
-    - spark
     plugin: python
     source: .
-      
-  spark:
-    plugin: nil
     build-packages:
+      - ca-certificates
+      - ca-certificates-java
+      - openjdk-11-jre-headless
       - wget
     stage-packages:
       - openjdk-11-jre-headless
-    override-build: |
-      wget https://dlcdn.apache.org/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
-      SPARK_DIR=$CRAFT_PART_INSTALL/opt/spark
-      mkdir -p $SPARK_DIR
-      tar -zxvf spark-3.5.0-bin-hadoop3.tgz
-      mv spark-3.5.0-bin-hadoop3/* $SPARK_DIR/
-    override-prime:
+    override-prime: |
       snapcraftctl prime
+      rm -vf usr/lib/jvm/java-11-openjdk-*/lib/security/blacklisted.certs
