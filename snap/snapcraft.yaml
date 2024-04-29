@@ -17,7 +17,7 @@ apps:
   inferschema:
     command: bin/inferschema
     environment:
-      PATH: $SNAP:$PATH
+      JAVA_HOME: $SNAP/usr/lib/jvm/java-11-openjdk-$SNAP_ARCH
     plugs: [network, network-bind]
 
 parts:
